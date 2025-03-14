@@ -1,105 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curie Holmes - Trending SEO Topics</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    header {
-      background: #1a73e8;
-      color: white;
-      width: 100%;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    main {
-      width: 90%;
-      max-width: 600px;
-      margin-top: 20px;
-    }
-    .topic-card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      transition: transform 0.2s;
-    }
-    .topic-card:hover {
-      transform: scale(1.02);
-    }
-    .rank {
-      font-weight: bold;
-      color: #1a73e8;
-    }
-    footer {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Curie Holmes</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <h1>Curie Holmes</h1>
-    <p>Trending SEO Topics for Web3, Crypto & Modern Science</p>
-  </header>
-  <main id="topics-container">
-    <!-- Topics will be dynamically loaded here -->
-  </main>
-  <footer>
-    Powered by AWS Services | Data updated every hour
-  </footer>
-
-  <script>
-    // Replace with your actual API Gateway endpoint
-    const API_ENDPOINT = 'https://ppvcwr2z13.execute-api.us-east-1.amazonaws.com/prod';
-
-    async function fetchTrendingTopics() {
-      try {
-        const response = await fetch(API_ENDPOINT);
-        if (!response.ok) throw new Error('Failed to fetch topics');
-        const data = await response.json();
-        renderTopics(data.topics);
-      } catch (error) {
-        console.error('Error fetching topics:', error);
-        document.getElementById('topics-container').innerHTML = `<p style="color: red;">Failed to load topics. Please try again later.</p>`;
-      }
-    }
-
-    function renderTopics(topics) {
-      const container = document.getElementById('topics-container');
-      container.innerHTML = ''; // Clear previous topics
-      topics.forEach((topic, index) => {
-        const card = document.createElement('div');
-        card.className = 'topic-card';
-        card.innerHTML = `
-          <span class="rank">#${index + 1}</span>
-          <h3>${topic.title}</h3>
-          <p>${topic.description}</p>
-          <small>Popularity Score: ${topic.popularityScore}</small>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // Initial fetch on page load
-    fetchTrendingTopics();
-
-    // Auto-refresh every hour
-    setInterval(fetchTrendingTopics, 60 * 60 * 1000);
-  </script>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-8">🔬 Curie Holmes</h1>
+        <div id="loader" class="text-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+        </div>
+        <div id="topics" class="grid gap-6"></div>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
